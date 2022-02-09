@@ -12,6 +12,9 @@ connectDB();
 
 const app = express();
 
+//Add body parser
+app.use(express.json());
+
 //Mount routers
 app.use("/api/v1/hospitals", hospitals);
 
