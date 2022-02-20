@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 
 //Route files
@@ -16,6 +17,9 @@ const app = express();
 //Add body parser
 app.use(express.json());
 
+//Cookie parser
+app.use(cookieParser());
+
 //Mount routers
 app.use("/api/v1/hospitals", hospitals);
 app.use("/api/v1/auth", auth);
@@ -26,7 +30,7 @@ const server = app.listen(
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
 
-process.on('unhandledRejection', (err, promise) => {
+process.on("unhandledRejection", (err, promise) => {
   console.log(`Error: ${err.message}`);
   server.close(() => process.exit(1));
-})
+});
