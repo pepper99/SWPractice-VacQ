@@ -8,6 +8,8 @@ const xss = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const cors = require("cors");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
 
 //Route files
 const hospitals = require("./routes/hospitals");
@@ -46,12 +48,33 @@ app.use(hpp());
 //Enable CORS
 app.use(cors());
 
+const PORT = process.env.PORT || 5000;
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Library API",
+      version: "1.0.0",
+      description: "A simple Express VacQ API",
+    },
+    servers: [
+      {
+        url: `http://localhost:${PORT}/api/v1`,
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 //Mount routers
 app.use("/api/v1/hospitals", hospitals);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/appointments", appointments);
 
-const PORT = process.env.PORT || 5000;
 const server = app.listen(
   PORT,
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
