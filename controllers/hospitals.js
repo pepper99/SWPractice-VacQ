@@ -1,5 +1,5 @@
 const Hospital = require("../models/Hospital");
-const VacCenter = require("../models/VacCenter");
+// const VacCenter = require("../models/VacCenter");
 
 //@desc     Get vaccine centers
 //@route    GET /api/v1/hospitals/vacCenters/
@@ -30,7 +30,7 @@ exports.getHospitals = async (req, res, next) => {
 
   //Loop over remove fields and delete them from reqQuery
   removeFields.forEach((param) => delete reqQuery[param]);
-  console.log(reqQuery);
+  // console.log(reqQuery);
 
   //Create query string
   let queryStr = JSON.stringify(reqQuery);
@@ -64,7 +64,7 @@ exports.getHospitals = async (req, res, next) => {
   const endIndex = page * limit;
   const total = await Hospital.countDocuments();
 
-  console.log(page, limit);
+  // console.log(page, limit);
 
   query = query.skip(startIndex).limit(limit);
 
