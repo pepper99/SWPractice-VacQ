@@ -60,7 +60,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${PORT}/api/v1`,
+        url: `${process.env.SWAGGER_SERVER}/api/v1`,
       },
     ],
   },
